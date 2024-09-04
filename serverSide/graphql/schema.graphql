@@ -1,0 +1,153 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+scalar DateTimeTz
+    @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTimeTz")
+
+# input connectID {
+#     connect: ID!
+# }
+
+type Query {
+    myFeed: [Article] @guard
+    exploreFeed: [Article] @guard
+    searchArticle(search: String!): [Article] @guard
+    getArticleBy(key: String!, value: String!): [Article] @guard
+    GetArticleByTaxonomies(key: String!): [Article] @guard
+    me: User @auth
+    getUserTaxonomies(key: String!): [Taxonomy] @guard
+}
+
+type Mutation {
+    logout: Auth @guard
+    signIn(email: String!, password: String!): Auth!
+    signUp(
+        name: String!
+        email: String!
+        password: String!
+        confirm_password: String!
+    ): Auth!
+    updatePassword(password: String!, confirm_password: String!): User @guard
+    updateUser(id: ID!, name: String!, avatar: String): User @update @guard
+
+    articleStatus(input: InputArticle! @spread): Article @guard
+    taxonomyUpsert(input: InputTaxonomy! @spread): Taxonomy @guard
+    settingUpsert(input: InputSetting! @spread): Setting @guard
+
+    deleteTaxonomy(id: ID! @whereKey): Taxonomy @delete @guard
+}
+
+input InputArticle {
+    already_read: Int
+    read_later: Int
+    favorite: Int
+    url: String
+}
+
+input InputTaxonomy {
+    name: String!
+    type: String!
+    slug: String
+    id: String
+    parent_id: String
+}
+
+input InputArticle {
+    title: String
+    description: String
+    content: String
+    image: String
+    publishedAt: String
+    url: String
+    category_id: String
+    category_name: String
+    source_id: String
+    source_name: String
+    author_id: String
+    author_name: String
+    read_later: Int
+    favorites: Int
+    already_read: Int
+}
+
+input InputSetting {
+    disposition: Int
+    dark_mode: Int
+    notification: Int
+    showByPage: Int
+    feed_by: String
+}
+
+type User {
+    id: ID
+    name: String!
+    email: String!
+    avatar: String
+    created_at: DateTime
+    updated_at: DateTime
+    settings: [Setting] @hasMany
+    articles: [Article] @hasMany
+    taxonomies: [Taxonomy] @hasMany
+}
+
+type Article {
+    id: ID
+    title: String
+    description: String
+    content: String
+    image: String
+    publishedAt: String
+    url: String
+    category_id: String
+    category_name: String
+    source_id: String
+    source_name: String
+    author_id: String
+    author_name: String
+    read_later: Int
+    favorites: Int
+    already_read: Int
+    user: User @belongsTo
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+type Setting {
+    id: ID
+    user: User @belongsTo
+    disposition: Int
+    dark_mode: Int
+    notification: Int
+    showByPage: Int
+    feed_by: String
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+type Taxonomy {
+    id: ID
+    name: String!
+    type: String!
+    slug: String
+    user: User @belongsTo
+    parent: Taxonomy @belongsTo
+    children: [Taxonomy] @hasMany
+    created_at: DateTime
+    updated_at: DateTime
+}
+
+type Profile {
+    user: User
+    feed: [Article]
+    Taxonomies: [Taxonomy]
+    settings: [Setting]
+    filterBy: String
+    filters: String
+}
+
+type Auth {
+    status: Int
+    token: String
+    error: String
+}

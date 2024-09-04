@@ -1,0 +1,107 @@
+:root {
+  --max-width: 1100px;
+  --border-radius: 12px;
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+  --foreground-rgb: 45, 52, 54;
+  --background-start-rgb: 255, 250, 240;
+  --background-end-rgb: 253, 242, 233;
+
+  --primary-glow: conic-gradient(
+    from 180deg at 50% 50%,
+    #ff7675 0deg,
+    #fd79a8 55deg,
+    #e84393 120deg,
+    #6c5ce7 160deg,
+    transparent 360deg
+  );
+  --secondary-glow: radial-gradient(
+    rgba(253, 203, 110, 1),
+    rgba(253, 203, 110, 0)
+  );
+
+  --tile-start-rgb: 250, 245, 240;
+  --tile-end-rgb: 245, 239, 230;
+  --tile-border: conic-gradient(
+    #2d343680,
+    #2d343640,
+    #2d343630,
+    #2d343620,
+    #2d343610,
+    #2d343610,
+    #2d343680
+  );
+
+  --callout-rgb: 250, 242, 239;
+  --callout-border-rgb: 200, 198, 196;
+  --card-rgb: 239, 235, 233;
+  --card-border-rgb: 155, 154, 153;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 33, 33, 33;
+    --background-end-rgb: 48, 48, 48;
+
+    --primary-glow: radial-gradient(rgba(255, 195, 18, 0.4), rgba(255, 195, 18, 0));
+    --secondary-glow: linear-gradient(
+      to bottom right,
+      rgba(255, 87, 34, 0),
+      rgba(255, 87, 34, 0),
+      rgba(255, 87, 34, 0.3)
+    );
+
+    --tile-start-rgb: 28, 28, 28;
+    --tile-end-rgb: 40, 40, 40;
+    --tile-border: conic-gradient(
+      #ffffff80,
+      #ffffff40,
+      #ffffff30,
+      #ffffff20,
+      #ffffff10,
+      #ffffff10,
+      #ffffff80
+    );
+
+    --callout-rgb: 50, 50, 50;
+    --callout-border-rgb: 120, 120, 120;
+    --card-rgb: 80, 80, 80;
+    --card-border-rgb: 170, 170, 170;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
